@@ -9,7 +9,7 @@
   Enquanto DATA_SOURCE_URL estiver vazio, o site tenta carregar dados.json local.
 */
 
-const DATA_SOURCE_URL = ""; // Exemplo: "https://script.google.com/macros/s/SEU_ID/exec"
+const DATA_SOURCE_URL = "https://script.google.com/macros/s/AKfycbz58VAUqPys9xlpxxUFFeCd7ZgPpI7N69QaIFytsk0zEeAUhHmdPm1Eqi5O1aVjGZ9W_Q/exec"; // Exemplo: "https://script.google.com/macros/s/SEU_ID/exec"
 
 let games = [];
 let selectedGameId = null;
