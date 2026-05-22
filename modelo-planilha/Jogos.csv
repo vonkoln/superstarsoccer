@@ -1,0 +1,4 @@
+id,date,time,league,home,away,stadium,status,region,active
+1,2026-05-22,19:00,Brasileirão Série A,Cruzeiro,Flamengo,Mineirão,Hoje,Brasil,true
+2,2026-05-22,21:30,Copa do Brasil,Corinthians,Grêmio,Neo Química Arena,Hoje,Brasil,true
+3,2026-05-23,16:00,Premier League,Manchester City,Liverpool,Etihad Stadium,Amanhã,Internacional,true

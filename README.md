@@ -1,56 +1,65 @@
-# Onde Passa o Jogo?
+# Onde Passa o Jogo? — Versão Google Apps Script
 
-Site estático para informar onde jogos de futebol serão transmitidos.
+Esta versão usa:
 
-## Arquivos
+- Site estático em `site/`
+- Google Sheets como painel administrativo
+- Google Apps Script como robô de busca e endpoint JSON
+- Brave Search API para buscar fontes na web
 
-- `index.html`: estrutura da página.
-- `style.css`: visual do site.
-- `script.js`: filtros, busca, carregamento e interação.
-- `dados.json`: base editável de jogos e transmissões.
+## Estrutura
 
-## Como editar os jogos
+```txt
+apps-script/
+├── Codigo.gs
+└── appsscript.json
 
-Abra o arquivo `dados.json` e adicione novos objetos seguindo o mesmo modelo:
+site/
+├── index.html
+├── style.css
+├── script.js
+└── dados.json
 
-```json
-{
-  "id": 6,
-  "date": "2026-05-26",
-  "time": "20:30",
-  "league": "Campeonato Exemplo",
-  "home": "Time A",
-  "away": "Time B",
-  "stadium": "Estádio Exemplo",
-  "status": "Próximos 7 dias",
-  "region": "Brasil",
-  "transmissions": [
-    {
-      "type": "TV",
-      "name": "Canal Exemplo",
-      "details": "Detalhes da transmissão."
-    }
-  ]
-}
+modelo-planilha/
+├── Jogos.csv
+├── Canais.csv
+└── Transmissoes.csv
 ```
 
-## Atenção importante
+## Como instalar
 
-Como o site carrega `dados.json` com JavaScript, alguns navegadores bloqueiam esse carregamento quando você abre o `index.html` diretamente pelo duplo clique.
+1. Crie uma Google Sheets nova.
+2. Vá em **Extensões > Apps Script**.
+3. Cole o conteúdo de `apps-script/Codigo.gs`.
+4. No editor do Apps Script, abra `appsscript.json` e substitua pelo conteúdo de `apps-script/appsscript.json`.
+5. Salve o projeto.
+6. Recarregue a planilha.
+7. Use o menu **Onde Passa o Jogo > 1. Configurar planilha**.
+8. Use **Onde Passa o Jogo > 2. Salvar chave Brave API**.
+9. Use **Onde Passa o Jogo > 3. Atualizar transmissões agora**.
 
-Use uma destas opções:
+## Publicar como JSON
 
-1. VS Code com extensão Live Server.
-2. Netlify.
-3. GitHub Pages.
-4. Vercel.
-5. Qualquer servidor local.
+1. No Apps Script, clique em **Implantar > Nova implantação**.
+2. Tipo: **App da Web**.
+3. Executar como: **Eu**.
+4. Quem tem acesso: **Qualquer pessoa**.
+5. Copie a URL `/exec`.
 
-## Próximos passos recomendados
+Depois abra `site/script.js` e cole a URL aqui:
 
-- Criar painel administrativo para cadastrar jogos.
-- Integrar com Google Sheets, Firebase ou Supabase.
-- Criar páginas por time.
-- Criar páginas por campeonato.
-- Adicionar favoritos e notificações.
-- Adicionar campo de link oficial da transmissão.
+```js
+const DATA_SOURCE_URL = "https://script.google.com/macros/s/SEU_ID/exec";
+```
+
+## Atualização automática
+
+Na planilha, use:
+
+**Onde Passa o Jogo > 4. Criar gatilho diário**
+
+Isso cria uma rotina diária para rodar `atualizarTransmissoes()`.
+
+## Observação importante
+
+O bot detecta canais por palavras-chave e fontes encontradas. Ele deve ser tratado como pré-curadoria. Transmissões esportivas podem variar por praça, contrato, bloqueio regional e mudança de última hora.

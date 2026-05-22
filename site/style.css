@@ -101,8 +101,7 @@ select {
 .hero-card,
 .finder-card,
 .game-card,
-.details-card,
-.info-card {
+.details-card {
   border: 1px solid var(--line);
   background: linear-gradient(180deg, var(--card-strong), var(--card));
   border-radius: var(--radius);
@@ -149,9 +148,16 @@ h1 {
   max-width: 780px;
 }
 
-.hero-card p {
+.hero-card p,
+.finder-card p,
+.section-title p,
+.empty-state,
+.details-muted {
   color: var(--muted);
-  line-height: 1.7;
+  line-height: 1.6;
+}
+
+.hero-card p {
   font-size: 1.05rem;
   max-width: 680px;
 }
@@ -169,7 +175,7 @@ h1 {
   padding: 13px 18px;
   cursor: pointer;
   font-weight: 800;
-  transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+  transition: transform 0.2s ease;
 }
 
 .btn:hover {
@@ -198,18 +204,8 @@ h1 {
 
 .finder-card h2,
 .section-title h2,
-.details-card h2,
-.info-card h3 {
+.details-card h2 {
   letter-spacing: -0.04em;
-}
-
-.finder-card p,
-.section-title p,
-.empty-state,
-.details-muted,
-.info-card p {
-  color: var(--muted);
-  line-height: 1.6;
 }
 
 .search-box {
@@ -445,6 +441,15 @@ h1 {
   display: block;
 }
 
+.source-link {
+  display: inline-block;
+  margin-top: 8px;
+  color: #c9ffdc;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-decoration: underline;
+}
+
 .confidence {
   display: inline-flex;
   align-items: center;
@@ -469,21 +474,6 @@ h1 {
   font-size: 0.9rem;
 }
 
-.info-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin-top: 24px;
-}
-
-.info-card {
-  padding: 20px;
-}
-
-.info-card h3 {
-  margin-bottom: 10px;
-}
-
 .empty-state {
   border: 1px dashed rgba(255, 255, 255, 0.22);
   border-radius: 22px;
@@ -501,8 +491,7 @@ footer {
 
 @media (max-width: 980px) {
   .hero,
-  .content-grid,
-  .info-row {
+  .content-grid {
     grid-template-columns: 1fr;
   }
 

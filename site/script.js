@@ -1,12 +1,15 @@
 /*
   Onde Passa o Jogo?
   ------------------
-  Agora os jogos ficam no arquivo dados.json.
+  Para usar com Google Apps Script:
+  1. Publique o Apps Script como Web App.
+  2. Copie a URL de implantação.
+  3. Cole abaixo em DATA_SOURCE_URL.
 
-  Importante:
-  - Ao abrir diretamente com duplo clique no index.html, alguns navegadores podem bloquear o fetch do JSON.
-  - Use Live Server no VS Code, Netlify, GitHub Pages, Vercel ou qualquer servidor local.
+  Enquanto DATA_SOURCE_URL estiver vazio, o site tenta carregar dados.json local.
 */
+
+const DATA_SOURCE_URL = ""; // Exemplo: "https://script.google.com/macros/s/SEU_ID/exec"
 
 let games = [];
 let selectedGameId = null;
@@ -31,33 +34,40 @@ const updateStatus = document.getElementById("updateStatus");
 
 async function loadGames() {
   try {
-    const response = await fetch("dados.json", { cache: "no-store" });
+    const source = DATA_SOURCE_URL || "dados.json";
+    const separator = source.includes("?") ? "&" : "?";
+    const url = source.startsWith("http") ? `${source}${separator}t=${Date.now()}` : source;
+
+    const response = await fetch(url, { cache: "no-store" });
 
     if (!response.ok) {
-      throw new Error("Não foi possível carregar dados.json");
+      throw new Error(`Erro HTTP ${response.status}`);
     }
 
     games = await response.json();
 
-    updateStatus.textContent = "Agenda carregada pelo dados.json";
+    updateStatus.textContent = DATA_SOURCE_URL
+      ? "Agenda carregada via Google Apps Script"
+      : "Agenda carregada pelo dados.json local";
+
     renderGames();
   } catch (error) {
     console.error(error);
 
     gamesList.innerHTML = `
       <div class="empty-state">
-        Não foi possível carregar o arquivo <strong>dados.json</strong>.
-        Abra o projeto usando Live Server, Netlify, GitHub Pages ou outro servidor local.
+        Não foi possível carregar a agenda. Verifique se a URL do Google Apps Script está publicada
+        ou se o arquivo dados.json existe no projeto.
       </div>
     `;
 
-    updateStatus.textContent = "Erro ao carregar dados.json";
+    updateStatus.textContent = "Erro ao carregar agenda";
     renderStats([]);
   }
 }
 
 function formatDate(dateString) {
-  const [year, month, day] = dateString.split("-").map(Number);
+  const [year, month, day] = String(dateString).split("-").map(Number);
 
   return new Intl.DateTimeFormat("pt-BR", {
     weekday: "short",
@@ -67,7 +77,7 @@ function formatDate(dateString) {
 }
 
 function getInitials(team) {
-  return team
+  return String(team)
     .split(" ")
     .map((word) => word[0])
     .join("")
@@ -76,7 +86,7 @@ function getInitials(team) {
 }
 
 function normalizeText(text) {
-  return text
+  return String(text)
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
@@ -91,7 +101,7 @@ function gameMatchesSearch(game, searchTerm) {
     game.away,
     game.stadium,
     game.region,
-    ...game.transmissions.map((item) => `${item.type} ${item.name} ${item.details}`)
+    ...(game.transmissions || []).map((item) => `${item.type} ${item.name} ${item.details}`)
   ].join(" ");
 
   return normalizeText(searchable).includes(normalizeText(searchTerm));
@@ -111,7 +121,7 @@ function gameMatchesType(game, typeValue) {
 
   if (activeType === "all") return true;
 
-  return game.transmissions.some((item) => item.type === activeType);
+  return (game.transmissions || []).some((item) => item.type === activeType);
 }
 
 function getFilteredGames() {
@@ -129,7 +139,7 @@ function getFilteredGames() {
 
 function renderStats(filteredGames = games) {
   const allChannels = new Set(
-    games.flatMap((game) => game.transmissions.map((item) => item.name))
+    games.flatMap((game) => (game.transmissions || []).map((item) => item.name))
   );
 
   document.getElementById("totalGames").textContent = filteredGames.length;
@@ -147,7 +157,7 @@ function renderGames() {
   if (!filteredGames.length) {
     gamesList.innerHTML = `
       <div class="empty-state">
-        Nenhum jogo encontrado com esses filtros. Tente buscar por outro time, canal ou competição.
+        Nenhum jogo encontrado com esses filtros.
       </div>
     `;
     return;
@@ -155,15 +165,19 @@ function renderGames() {
 
   gamesList.innerHTML = filteredGames
     .map((game) => {
-      const channelChips = game.transmissions
-        .map(
-          (item) => `
-            <span class="channel-chip">
-              ${icons[item.type] || "•"} ${item.name}
-            </span>
-          `
-        )
-        .join("");
+      const transmissions = game.transmissions || [];
+
+      const channelChips = transmissions.length
+        ? transmissions
+            .map(
+              (item) => `
+                <span class="channel-chip">
+                  ${icons[item.type] || "•"} ${item.name}
+                </span>
+              `
+            )
+            .join("")
+        : `<span class="channel-chip">A confirmar</span>`;
 
       return `
         <article
@@ -224,27 +238,34 @@ function bindGameCards() {
 function selectGame(id) {
   selectedGameId = id;
 
-  const game = games.find((item) => item.id === id);
+  const game = games.find((item) => Number(item.id) === Number(id));
 
   if (!game) return;
 
-  const transmissions = game.transmissions
-    .map(
-      (item) => `
-        <div class="transmission-item">
-          <strong>
-            <span>${icons[item.type] || "•"} ${item.name}</span>
-            <span>${item.type}</span>
-          </strong>
-          <small>${item.details}</small>
-        </div>
-      `
-    )
-    .join("");
+  const transmissions = (game.transmissions || []).length
+    ? game.transmissions
+        .map(
+          (item) => `
+            <div class="transmission-item">
+              <strong>
+                <span>${icons[item.type] || "•"} ${item.name}</span>
+                <span>${item.type}</span>
+              </strong>
+              <small>${item.details || ""}</small>
+              ${
+                item.sourceUrl
+                  ? `<a class="source-link" href="${item.sourceUrl}" target="_blank" rel="noopener noreferrer">Ver fonte</a>`
+                  : ""
+              }
+            </div>
+          `
+        )
+        .join("")
+    : `<div class="empty-state">Transmissão ainda não confirmada.</div>`;
 
   detailsCard.innerHTML = `
     <div class="details-header">
-      <span class="confidence">Alta relevância para ${game.region}</span>
+      <span class="confidence">${game.region || "Região não informada"}</span>
       <h2>${game.home} x ${game.away}</h2>
       <p class="details-muted">
         ${game.league} • ${formatDate(game.date)} • ${game.time} • ${game.stadium}
@@ -256,8 +277,7 @@ function selectGame(id) {
     </div>
 
     <div class="notice">
-      Antes de exibir links reais, valide contrato, praça de transmissão, bloqueio regional
-      e regras de publicidade para casas de aposta.
+      Confirme sempre a disponibilidade regional, direitos de transmissão e alterações de última hora.
     </div>
   `;
 
@@ -286,7 +306,6 @@ function resetFilters() {
 
     <div class="notice">
       Para uso real, confirme direitos de transmissão, disponibilidade regional e links oficiais.
-      Casas de aposta devem aparecer apenas quando houver transmissão autorizada e público legalmente permitido.
     </div>
   `;
 
