@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "date": "2026-05-22",
+    "time": "19:00",
+    "league": "Brasileirão Série A",
+    "home": "Cruzeiro",
+    "away": "Flamengo",
+    "stadium": "Mineirão",
+    "status": "Hoje",
+    "region": "Brasil",
+    "transmissions": [
+      {
+        "type": "TV",
+        "name": "TV Aberta",
+        "details": "Transmissão nacional, sujeita à praça local."
+      },
+      {
+        "type": "TV",
+        "name": "SporTV",
+        "details": "TV fechada para assinantes."
+      },
+      {
+        "type": "Streaming",
+        "name": "Globoplay + Canais",
+        "details": "Disponível para assinantes do pacote compatível."
+      },
+      {
+        "type": "Rádio",
+        "name": "Rádio Itatiaia",
+        "details": "Narração ao vivo em FM, AM e internet."
+      },
+      {
+        "type": "Casa de aposta",
+        "name": "BetPlay Sports",
+        "details": "Exemplo demonstrativo. Verificar autorização, idade mínima e disponibilidade regional."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "date": "2026-05-22",
+    "time": "21:30",
+    "league": "Copa do Brasil",
+    "home": "Corinthians",
+    "away": "Grêmio",
+    "stadium": "Neo Química Arena",
+    "status": "Hoje",
+    "region": "Brasil",
+    "transmissions": [
+      {
+        "type": "TV",
+        "name": "Premiere",
+        "details": "Pay-per-view para assinantes."
+      },
+      {
+        "type": "Streaming",
+        "name": "Amazon Prime Video",
+        "details": "Exemplo demonstrativo de plataforma de streaming."
+      },
+      {
+        "type": "Rádio",
+        "name": "Rádio Gaúcha",
+        "details": "Cobertura ao vivo via rádio e internet."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "date": "2026-05-23",
+    "time": "16:00",
+    "league": "Premier League",
+    "home": "Manchester City",
+    "away": "Liverpool",
+    "stadium": "Etihad Stadium",
+    "status": "Amanhã",
+    "region": "Internacional",
+    "transmissions": [
+      {
+        "type": "TV",
+        "name": "ESPN",
+        "details": "Canal de TV fechada."
+      },
+      {
+        "type": "Streaming",
+        "name": "Disney+",
+        "details": "Streaming mediante assinatura."
+      },
+      {
+        "type": "Rádio",
+        "name": "BBC Radio 5 Live",
+        "details": "Áudio em inglês, quando disponível."
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "date": "2026-05-24",
+    "time": "11:00",
+    "league": "La Liga",
+    "home": "Real Madrid",
+    "away": "Barcelona",
+    "stadium": "Santiago Bernabéu",
+    "status": "Próximos 7 dias",
+    "region": "Internacional",
+    "transmissions": [
+      {
+        "type": "TV",
+        "name": "ESPN",
+        "details": "Transmissão em TV fechada."
+      },
+      {
+        "type": "Streaming",
+        "name": "Disney+",
+        "details": "Assinatura necessária."
+      },
+      {
+        "type": "Casa de aposta",
+        "name": "Bet Arena Live",
+        "details": "Exemplo demonstrativo. Verificar disponibilidade legal."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "date": "2026-05-25",
+    "time": "20:00",
+    "league": "Libertadores",
+    "home": "Atlético Nacional",
+    "away": "Palmeiras",
+    "stadium": "Atanasio Girardot",
+    "status": "Próximos 7 dias",
+    "region": "América do Sul",
+    "transmissions": [
+      {
+        "type": "TV",
+        "name": "ESPN",
+        "details": "Canal fechado."
+      },
+      {
+        "type": "Streaming",
+        "name": "Paramount+",
+        "details": "Streaming mediante assinatura."
+      },
+      {
+        "type": "Rádio",
+        "name": "Rádio Bandeirantes",
+        "details": "Cobertura esportiva ao vivo."
+      }
+    ]
+  }
+]

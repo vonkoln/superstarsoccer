@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Encontre onde assistir jogos de futebol ao vivo na TV, rádio, streaming e plataformas autorizadas." />
+  <title>Onde Passa o Jogo?</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="logo" href="#" aria-label="Página inicial">
+        <span class="logo-mark">▶</span>
+        <span>Onde Passa o Jogo?</span>
+      </a>
+
+      <div class="top-actions" aria-label="Status de atualização">
+        <span class="status-dot"></span>
+        <span id="updateStatus">Carregando agenda...</span>
+      </div>
+    </header>
+
+    <section class="hero" aria-label="Busca principal">
+      <div class="hero-card">
+        <span class="eyebrow">⚽ Futebol, rádio, TV, streaming e odds em um só lugar</span>
+        <h1>Descubra exatamente onde assistir ao seu jogo.</h1>
+        <p>
+          Um guia centralizado para encontrar transmissões de futebol por TV aberta,
+          TV fechada, streaming, rádio, YouTube, app oficial, pay-per-view e plataformas
+          autorizadas.
+        </p>
+
+        <div class="hero-actions">
+          <button class="btn btn-primary" id="goToGamesBtn">Ver jogos de hoje</button>
+          <button class="btn btn-ghost" id="clearFiltersBtn">Limpar filtros</button>
+        </div>
+      </div>
+
+      <aside class="finder-card" aria-label="Filtros">
+        <div>
+          <h2>Encontre seu jogo</h2>
+          <p>Pesquise por time, campeonato, canal, rádio ou plataforma.</p>
+        </div>
+
+        <form class="search-box" id="searchForm">
+          <div class="field">
+            <label for="searchInput">Busca</label>
+            <input
+              id="searchInput"
+              type="search"
+              placeholder="Ex: Cruzeiro, Série A, Sportv..."
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="field">
+            <label for="dateFilter">Data</label>
+            <select id="dateFilter">
+              <option value="all">Todos os dias</option>
+              <option value="today">Hoje</option>
+              <option value="tomorrow">Amanhã</option>
+              <option value="week">Próximos 7 dias</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="typeFilter">Tipo de transmissão</label>
+            <select id="typeFilter">
+              <option value="all">Todos</option>
+              <option value="TV">TV</option>
+              <option value="Streaming">Streaming</option>
+              <option value="Rádio">Rádio</option>
+              <option value="Casa de aposta">Casa de aposta</option>
+            </select>
+          </div>
+
+          <button class="btn btn-primary" type="submit">Buscar transmissão</button>
+        </form>
+      </aside>
+    </section>
+
+    <section class="stats-grid" aria-label="Resumo da plataforma">
+      <div class="stat">
+        <strong id="totalGames">0</strong>
+        <span>jogos encontrados</span>
+      </div>
+
+      <div class="stat">
+        <strong id="totalChannels">0</strong>
+        <span>fontes cadastradas</span>
+      </div>
+
+      <div class="stat">
+        <strong id="liveNow">0</strong>
+        <span>hoje ou amanhã</span>
+      </div>
+    </section>
+
+    <section class="content-grid" id="gamesSection">
+      <div>
+        <div class="section-title">
+          <div>
+            <h2>Agenda de transmissões</h2>
+            <p>Escolha um jogo para ver todos os canais disponíveis.</p>
+          </div>
+
+          <div class="filter-pills" aria-label="Filtros rápidos">
+            <button class="pill active" type="button" data-quick="all">Todos</button>
+            <button class="pill" type="button" data-quick="TV">TV</button>
+            <button class="pill" type="button" data-quick="Streaming">Streaming</button>
+            <button class="pill" type="button" data-quick="Rádio">Rádio</button>
+            <button class="pill" type="button" data-quick="Casa de aposta">Apostas</button>
+          </div>
+        </div>
+
+        <div class="games-list" id="gamesList">
+          <div class="empty-state">Carregando jogos...</div>
+        </div>
+      </div>
+
+      <aside class="details-card" id="detailsCard" aria-live="polite">
+        <div class="details-header">
+          <span class="confidence">Selecione um jogo</span>
+          <h2>Detalhes da transmissão</h2>
+          <p class="details-muted">
+            Clique em qualquer partida para visualizar TV, rádio, streaming e observações.
+          </p>
+        </div>
+
+        <div class="notice">
+          Para uso real, confirme direitos de transmissão, disponibilidade regional e links oficiais.
+          Casas de aposta devem aparecer apenas quando houver transmissão autorizada e público legalmente permitido.
+        </div>
+      </aside>
+    </section>
+
+    <section class="info-row" aria-label="Recursos do produto">
+      <article class="info-card">
+        <h3>Busca por time</h3>
+        <p>
+          O usuário encontra rapidamente onde assistir a Cruzeiro, Flamengo, Palmeiras,
+          Real Madrid, Seleção Brasileira e outros times.
+        </p>
+      </article>
+
+      <article class="info-card">
+        <h3>Transmissão completa</h3>
+        <p>
+          O mesmo jogo pode ter TV aberta, TV fechada, streaming, rádio, YouTube,
+          app oficial e plataforma autorizada.
+        </p>
+      </article>
+
+      <article class="info-card">
+        <h3>Pronto para monetizar</h3>
+        <p>
+          O layout comporta afiliados, links oficiais, newsletter, notificações
+          e páginas futuras por campeonato ou clube.
+        </p>
+      </article>
+    </section>
+
+    <footer>
+      Projeto-base: guia de transmissão esportiva focado em futebol.
+      Os dados ficam no arquivo <strong>dados.json</strong>.
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
