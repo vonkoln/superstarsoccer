@@ -1,16 +1,3 @@
-/*
-  Onde Passa o Jogo?
-  ------------------
-  Para usar com Google Apps Script:
-  1. Publique o Apps Script como Web App.
-  2. Copie a URL de implantação.
-  3. Cole abaixo em DATA_SOURCE_URL.
-
-  Enquanto DATA_SOURCE_URL estiver vazio, o site tenta carregar dados.json local.
-*/
-
-const DATA_SOURCE_URL = "https://script.google.com/macros/s/AKfycbz58VAUqPys9xlpxxUFFeCd7ZgPpI7N69QaIFytsk0zEeAUhHmdPm1Eqi5O1aVjGZ9W_Q/exec"; // Exemplo: "https://script.google.com/macros/s/SEU_ID/exec"
-
 let games = [];
 let selectedGameId = null;
 let quickFilter = "all";
@@ -34,11 +21,9 @@ const updateStatus = document.getElementById("updateStatus");
 
 async function loadGames() {
   try {
-    const source = DATA_SOURCE_URL || "dados.json";
-    const separator = source.includes("?") ? "&" : "?";
-    const url = source.startsWith("http") ? `${source}${separator}t=${Date.now()}` : source;
-
-    const response = await fetch(url, { cache: "no-store" });
+    const response = await fetch(`dados.json?t=${Date.now()}`, {
+      cache: "no-store"
+    });
 
     if (!response.ok) {
       throw new Error(`Erro HTTP ${response.status}`);
@@ -46,18 +31,15 @@ async function loadGames() {
 
     games = await response.json();
 
-    updateStatus.textContent = DATA_SOURCE_URL
-      ? "Agenda carregada via Google Apps Script"
-      : "Agenda carregada pelo dados.json local";
-
+    updateStatus.textContent = "Agenda carregada pelo dados.json";
     renderGames();
   } catch (error) {
     console.error(error);
 
     gamesList.innerHTML = `
       <div class="empty-state">
-        Não foi possível carregar a agenda. Verifique se a URL do Google Apps Script está publicada
-        ou se o arquivo dados.json existe no projeto.
+        Não foi possível carregar o dados.json.
+        Use o Live Server no VS Code ou publique o site em um servidor.
       </div>
     `;
 
@@ -69,6 +51,10 @@ async function loadGames() {
 function formatDate(dateString) {
   const [year, month, day] = String(dateString).split("-").map(Number);
 
+  if (!year || !month || !day) {
+    return dateString;
+  }
+
   return new Intl.DateTimeFormat("pt-BR", {
     weekday: "short",
     day: "2-digit",
@@ -77,7 +63,7 @@ function formatDate(dateString) {
 }
 
 function getInitials(team) {
-  return String(team)
+  return String(team || "")
     .split(" ")
     .map((word) => word[0])
     .join("")
@@ -86,7 +72,7 @@ function getInitials(team) {
 }
 
 function normalizeText(text) {
-  return String(text)
+  return String(text || "")
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
@@ -101,7 +87,9 @@ function gameMatchesSearch(game, searchTerm) {
     game.away,
     game.stadium,
     game.region,
-    ...(game.transmissions || []).map((item) => `${item.type} ${item.name} ${item.details}`)
+    ...(game.transmissions || []).map(
+      (item) => `${item.type} ${item.name} ${item.details}`
+    )
   ].join(" ");
 
   return normalizeText(searchable).includes(normalizeText(searchTerm));
@@ -111,7 +99,9 @@ function gameMatchesDate(game, dateValue) {
   if (dateValue === "all") return true;
   if (dateValue === "today") return game.status === "Hoje";
   if (dateValue === "tomorrow") return game.status === "Amanhã";
-  if (dateValue === "week") return ["Hoje", "Amanhã", "Próximos 7 dias"].includes(game.status);
+  if (dateValue === "week") {
+    return ["Hoje", "Amanhã", "Próximos 7 dias"].includes(game.status);
+  }
 
   return true;
 }
@@ -139,7 +129,9 @@ function getFilteredGames() {
 
 function renderStats(filteredGames = games) {
   const allChannels = new Set(
-    games.flatMap((game) => (game.transmissions || []).map((item) => item.name))
+    games.flatMap((game) =>
+      (game.transmissions || []).map((item) => item.name)
+    )
   );
 
   document.getElementById("totalGames").textContent = filteredGames.length;
@@ -185,17 +177,18 @@ function renderGames() {
           data-game-id="${game.id}"
           tabindex="0"
           role="button"
-          aria-label="Ver transmissão de ${game.home} contra ${game.away}"
         >
           <div class="game-top">
             <div>
               <div class="league">${game.league}</div>
+
               <div class="meta-row">
                 <span>${formatDate(game.date)}</span>
                 <span>•</span>
                 <span>${game.stadium}</span>
               </div>
             </div>
+
             <div class="game-time">${game.time}</div>
           </div>
 
@@ -211,7 +204,9 @@ function renderGames() {
             </div>
           </div>
 
-          <div class="channels">${channelChips}</div>
+          <div class="channels">
+            ${channelChips}
+          </div>
         </article>
       `;
     })
@@ -244,29 +239,43 @@ function selectGame(id) {
 
   const transmissions = (game.transmissions || []).length
     ? game.transmissions
-        .map(
-          (item) => `
+        .map((item) => {
+          const confidence = item.confidence
+            ? `<span>${item.confidence}%</span>`
+            : `<span>revisar</span>`;
+
+          const source = item.sourceUrl
+            ? `<a class="source-link" href="${item.sourceUrl}" target="_blank" rel="noopener noreferrer">Ver fonte</a>`
+            : "";
+
+          return `
             <div class="transmission-item">
               <strong>
                 <span>${icons[item.type] || "•"} ${item.name}</span>
-                <span>${item.type}</span>
+                ${confidence}
               </strong>
+
               <small>${item.details || ""}</small>
+
               ${
-                item.sourceUrl
-                  ? `<a class="source-link" href="${item.sourceUrl}" target="_blank" rel="noopener noreferrer">Ver fonte</a>`
+                item.reviewStatus
+                  ? `<small>Status: ${item.reviewStatus}</small>`
                   : ""
               }
+
+              ${source}
             </div>
-          `
-        )
+          `;
+        })
         .join("")
     : `<div class="empty-state">Transmissão ainda não confirmada.</div>`;
 
   detailsCard.innerHTML = `
     <div class="details-header">
       <span class="confidence">${game.region || "Região não informada"}</span>
+
       <h2>${game.home} x ${game.away}</h2>
+
       <p class="details-muted">
         ${game.league} • ${formatDate(game.date)} • ${game.time} • ${game.stadium}
       </p>
@@ -277,7 +286,8 @@ function selectGame(id) {
     </div>
 
     <div class="notice">
-      Confirme sempre a disponibilidade regional, direitos de transmissão e alterações de última hora.
+      Confirme sempre a disponibilidade regional, direitos de transmissão
+      e alterações de última hora.
     </div>
   `;
 
@@ -298,14 +308,17 @@ function resetFilters() {
   detailsCard.innerHTML = `
     <div class="details-header">
       <span class="confidence">Selecione um jogo</span>
+
       <h2>Detalhes da transmissão</h2>
+
       <p class="details-muted">
-        Clique em qualquer partida para visualizar TV, rádio, streaming e observações.
+        Clique em uma partida para visualizar TV, rádio, streaming,
+        fonte encontrada e nível de confiança.
       </p>
     </div>
 
     <div class="notice">
-      Para uso real, confirme direitos de transmissão, disponibilidade regional e links oficiais.
+      As transmissões detectadas automaticamente devem ser conferidas.
     </div>
   `;
 

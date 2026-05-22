@@ -3,43 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Encontre onde assistir jogos de futebol ao vivo na TV, rádio, streaming e plataformas autorizadas." />
+
   <title>Onde Passa o Jogo?</title>
+
+  <meta
+    name="description"
+    content="Descubra onde assistir jogos de futebol na TV, streaming, rádio e plataformas autorizadas."
+  />
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <main class="page">
     <header class="topbar">
-      <a class="logo" href="#" aria-label="Página inicial">
+      <a class="logo" href="#">
         <span class="logo-mark">▶</span>
         <span>Onde Passa o Jogo?</span>
       </a>
 
-      <div class="top-actions" aria-label="Status de atualização">
+      <div class="top-actions">
         <span class="status-dot"></span>
         <span id="updateStatus">Carregando agenda...</span>
       </div>
     </header>
 
-    <section class="hero" aria-label="Busca principal">
+    <section class="hero">
       <div class="hero-card">
-        <span class="eyebrow">⚽ Futebol, rádio, TV, streaming e odds em um só lugar</span>
-        <h1>Descubra exatamente onde assistir ao seu jogo.</h1>
+        <span class="eyebrow">
+          ⚽ Futebol, TV, rádio, streaming e transmissão online
+        </span>
+
+        <h1>Descubra onde assistir ao seu jogo.</h1>
+
         <p>
-          Um guia centralizado para encontrar transmissões de futebol por TV aberta,
-          TV fechada, streaming, rádio, YouTube, app oficial, pay-per-view e plataformas
-          autorizadas.
+          Consulte rapidamente onde será transmitida uma partida de futebol:
+          TV aberta, TV fechada, streaming, rádio, YouTube, pay-per-view e
+          plataformas autorizadas.
         </p>
 
         <div class="hero-actions">
-          <button class="btn btn-primary" id="goToGamesBtn">Ver jogos de hoje</button>
-          <button class="btn btn-ghost" id="clearFiltersBtn">Limpar filtros</button>
+          <button class="btn btn-primary" id="goToGamesBtn">
+            Ver jogos
+          </button>
+
+          <button class="btn btn-ghost" id="clearFiltersBtn">
+            Limpar filtros
+          </button>
         </div>
       </div>
 
-      <aside class="finder-card" aria-label="Filtros">
+      <aside class="finder-card">
         <div>
-          <h2>Encontre seu jogo</h2>
+          <h2>Buscar transmissão</h2>
           <p>Pesquise por time, campeonato, canal, rádio ou plataforma.</p>
         </div>
 
@@ -49,7 +64,7 @@
             <input
               id="searchInput"
               type="search"
-              placeholder="Ex: Cruzeiro, Série A, Sportv..."
+              placeholder="Ex: Cruzeiro, Flamengo, Globo, SporTV..."
               autocomplete="off"
             />
           </div>
@@ -75,12 +90,14 @@
             </select>
           </div>
 
-          <button class="btn btn-primary" type="submit">Buscar transmissão</button>
+          <button class="btn btn-primary" type="submit">
+            Buscar
+          </button>
         </form>
       </aside>
     </section>
 
-    <section class="stats-grid" aria-label="Resumo da plataforma">
+    <section class="stats-grid">
       <div class="stat">
         <strong id="totalGames">0</strong>
         <span>jogos encontrados</span>
@@ -88,7 +105,7 @@
 
       <div class="stat">
         <strong id="totalChannels">0</strong>
-        <span>fontes cadastradas</span>
+        <span>fontes detectadas</span>
       </div>
 
       <div class="stat">
@@ -102,41 +119,61 @@
         <div class="section-title">
           <div>
             <h2>Agenda de transmissões</h2>
-            <p>Escolha um jogo para ver todos os canais disponíveis.</p>
+            <p>Escolha um jogo para visualizar todos os detalhes.</p>
           </div>
 
-          <div class="filter-pills" aria-label="Filtros rápidos">
-            <button class="pill active" type="button" data-quick="all">Todos</button>
-            <button class="pill" type="button" data-quick="TV">TV</button>
-            <button class="pill" type="button" data-quick="Streaming">Streaming</button>
-            <button class="pill" type="button" data-quick="Rádio">Rádio</button>
-            <button class="pill" type="button" data-quick="Casa de aposta">Apostas</button>
+          <div class="filter-pills">
+            <button class="pill active" type="button" data-quick="all">
+              Todos
+            </button>
+
+            <button class="pill" type="button" data-quick="TV">
+              TV
+            </button>
+
+            <button class="pill" type="button" data-quick="Streaming">
+              Streaming
+            </button>
+
+            <button class="pill" type="button" data-quick="Rádio">
+              Rádio
+            </button>
+
+            <button class="pill" type="button" data-quick="Casa de aposta">
+              Apostas
+            </button>
           </div>
         </div>
 
         <div class="games-list" id="gamesList">
-          <div class="empty-state">Carregando jogos...</div>
+          <div class="empty-state">
+            Carregando jogos...
+          </div>
         </div>
       </div>
 
-      <aside class="details-card" id="detailsCard" aria-live="polite">
+      <aside class="details-card" id="detailsCard">
         <div class="details-header">
           <span class="confidence">Selecione um jogo</span>
+
           <h2>Detalhes da transmissão</h2>
+
           <p class="details-muted">
-            Clique em qualquer partida para visualizar TV, rádio, streaming e observações.
+            Clique em uma partida para visualizar TV, rádio, streaming,
+            fonte encontrada e nível de confiança.
           </p>
         </div>
 
         <div class="notice">
-          Para uso real, confirme direitos de transmissão, disponibilidade regional e links oficiais.
-          Casas de aposta devem aparecer apenas quando houver transmissão autorizada e público legalmente permitido.
+          As transmissões detectadas automaticamente devem ser conferidas.
+          Elas podem variar por praça, contrato, disponibilidade regional ou
+          alteração de última hora.
         </div>
       </aside>
     </section>
 
     <footer>
-      Dados carregados via Google Apps Script ou arquivo local dados.json.
+      Dados carregados do arquivo <strong>dados.json</strong>.
     </footer>
   </main>
 

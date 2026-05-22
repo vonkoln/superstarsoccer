@@ -1,0 +1,92 @@
+[
+  {
+    "type": "TV",
+    "name": "TV Globo",
+    "aliases": ["globo", "tv globo", "rede globo", "ge tv"],
+    "detailsDefault": "Transmissão em TV aberta, sujeita à praça local."
+  },
+  {
+    "type": "TV",
+    "name": "SporTV",
+    "aliases": ["sportv", "sportv2", "sportv 2"],
+    "detailsDefault": "TV fechada para assinantes."
+  },
+  {
+    "type": "TV",
+    "name": "Premiere",
+    "aliases": ["premiere", "canal premiere", "pay-per-view", "ppv"],
+    "detailsDefault": "Pay-per-view para assinantes."
+  },
+  {
+    "type": "TV",
+    "name": "ESPN",
+    "aliases": ["espn", "espn brasil"],
+    "detailsDefault": "Canal de TV fechada."
+  },
+  {
+    "type": "Streaming",
+    "name": "Globoplay",
+    "aliases": ["globoplay", "globoplay canais", "globoplay + canais"],
+    "detailsDefault": "Streaming mediante assinatura compatível."
+  },
+  {
+    "type": "Streaming",
+    "name": "Disney+",
+    "aliases": ["disney+", "disney plus", "star+"],
+    "detailsDefault": "Streaming mediante assinatura."
+  },
+  {
+    "type": "Streaming",
+    "name": "Prime Video",
+    "aliases": ["prime video", "amazon prime video"],
+    "detailsDefault": "Streaming mediante assinatura."
+  },
+  {
+    "type": "Streaming",
+    "name": "Paramount+",
+    "aliases": ["paramount+", "paramount plus"],
+    "detailsDefault": "Streaming mediante assinatura."
+  },
+  {
+    "type": "Streaming",
+    "name": "YouTube",
+    "aliases": ["youtube", "canal youtube", "ao vivo no youtube"],
+    "detailsDefault": "Transmissão online quando disponível."
+  },
+  {
+    "type": "Rádio",
+    "name": "Rádio Itatiaia",
+    "aliases": ["itatiaia", "rádio itatiaia", "radio itatiaia"],
+    "detailsDefault": "Narração ao vivo em rádio e internet."
+  },
+  {
+    "type": "Rádio",
+    "name": "Rádio Gaúcha",
+    "aliases": ["gauchazh", "rádio gaúcha", "radio gaucha"],
+    "detailsDefault": "Cobertura ao vivo via rádio e internet."
+  },
+  {
+    "type": "Rádio",
+    "name": "Rádio Bandeirantes",
+    "aliases": ["rádio bandeirantes", "radio bandeirantes", "bandnews"],
+    "detailsDefault": "Cobertura esportiva ao vivo."
+  },
+  {
+    "type": "Casa de aposta",
+    "name": "Betano",
+    "aliases": ["betano"],
+    "detailsDefault": "Possível transmissão em plataforma de aposta. Verificar autorização, idade mínima e disponibilidade regional."
+  },
+  {
+    "type": "Casa de aposta",
+    "name": "bet365",
+    "aliases": ["bet365"],
+    "detailsDefault": "Possível transmissão em plataforma de aposta. Verificar autorização, idade mínima e disponibilidade regional."
+  },
+  {
+    "type": "Casa de aposta",
+    "name": "Sportingbet",
+    "aliases": ["sportingbet"],
+    "detailsDefault": "Possível transmissão em plataforma de aposta. Verificar autorização, idade mínima e disponibilidade regional."
+  }
+]

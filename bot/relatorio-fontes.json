@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-05-22T21:20:07.456Z",
+  "provider": "DuckDuckGo HTML",
+  "observacao": "Busca sem API paga. Pode falhar, bloquear ou retornar resultados incompletos. Use como pré-curadoria.",
+  "jogos": [
+    {
+      "jogo": "Cruzeiro x Flamengo",
+      "query": "\"Cruzeiro\" \"Flamengo\" \"Brasileirão Série A\" onde assistir transmissão TV streaming rádio",
+      "resultados": [],
+      "transmissoesDetectadas": []
+    },
+    {
+      "jogo": "Corinthians x Grêmio",
+      "query": "\"Corinthians\" \"Grêmio\" \"Copa do Brasil\" onde assistir transmissão TV streaming rádio",
+      "resultados": [],
+      "transmissoesDetectadas": []
+    },
+    {
+      "jogo": "Manchester City x Liverpool",
+      "query": "\"Manchester City\" \"Liverpool\" \"Premier League\" onde assistir transmissão TV streaming rádio",
+      "resultados": [],
+      "transmissoesDetectadas": []
+    }
+  ]
+}

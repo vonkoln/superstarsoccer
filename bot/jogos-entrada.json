@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "date": "2026-05-22",
+    "time": "19:00",
+    "league": "Brasileirão Série A",
+    "home": "Cruzeiro",
+    "away": "Flamengo",
+    "stadium": "Mineirão",
+    "status": "Hoje",
+    "region": "Brasil",
+    "active": true
+  },
+  {
+    "id": 2,
+    "date": "2026-05-22",
+    "time": "21:30",
+    "league": "Copa do Brasil",
+    "home": "Corinthians",
+    "away": "Grêmio",
+    "stadium": "Neo Química Arena",
+    "status": "Hoje",
+    "region": "Brasil",
+    "active": true
+  },
+  {
+    "id": 3,
+    "date": "2026-05-23",
+    "time": "16:00",
+    "league": "Premier League",
+    "home": "Manchester City",
+    "away": "Liverpool",
+    "stadium": "Etihad Stadium",
+    "status": "Amanhã",
+    "region": "Internacional",
+    "active": true
+  }
+]
